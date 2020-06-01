@@ -1,0 +1,21 @@
+{
+  "name": "csv-clean",
+  "version": "1.0.0",
+  "description": "Cleaning leads",
+  "author": "Patrick Labes",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "nuxt": "^2.0.0",
+    "nuxt-buefy": "^0.3.2",
+    "vue-papa-parse": "^1.3.0"
+  },
+  "devDependencies": {}
+}
