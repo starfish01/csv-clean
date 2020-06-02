@@ -45,7 +45,24 @@ export default {
   },
   methods: {
     processCSV() {
-      alert('fff');
+      const json = this.$papa.parse(this.dropFiles, {
+        header: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          var data = results;
+
+          //Data is captured
+          console.log(data.data);
+        }
+      });
+    },
+    debugDataset(results) {
+      console.log(results);
+      alert("debug");
+    },
+    renderDataset(results) {
+      console.log(results);
+      alert("results");
     },
     deleteDropFile(index) {
       this.dropFiles = null;
