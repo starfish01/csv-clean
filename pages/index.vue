@@ -48,21 +48,20 @@ export default {
     };
   },
   methods: {
-    dispatchStore(){
-      console.log('fff')
+    dispatchStore(data) {
+      this.$store.dispatch("CSVdata/processCSV", data);
     },
-    async processCSV() {
-      const json = await this.$papa.parse(this.dropFiles, {
+    processCSV() {
+      this.$papa.parse(this.dropFiles, {
         header: true,
         dynamicTyping: true,
-        complete: function(results) {
+        complete: (results) => {
           var data = results;
           //Data is capture
           _.forEach(data.data, (value, key) => {
             value.id = key;
           });
-          this.data = data.data;
-          console.log(this.data)
+          this.dispatchStore(data.data);
         }
       })
     },
