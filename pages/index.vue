@@ -37,24 +37,34 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
-      dropFiles: null
+      dropFiles: null,
+      isLoading: false,
+      data:null
     };
   },
   methods: {
-    processCSV() {
-      const json = this.$papa.parse(this.dropFiles, {
+    dispatchStore(){
+      console.log('fff')
+    },
+    async processCSV() {
+      const json = await this.$papa.parse(this.dropFiles, {
         header: true,
         dynamicTyping: true,
         complete: function(results) {
           var data = results;
-
-          //Data is captured
-          console.log(data.data);
+          //Data is capture
+          _.forEach(data.data, (value, key) => {
+            value.id = key;
+          });
+          this.data = data.data;
+          console.log(this.data)
         }
-      });
+      })
     },
     debugDataset(results) {
       console.log(results);
