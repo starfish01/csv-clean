@@ -59,7 +59,7 @@ export default {
           var data = results;
           //Data is capture
           _.forEach(data.data, (value, key) => {
-            value.id = key;
+            value.leadId = key;
           });
           this.dispatchStore(data.data);
         }
