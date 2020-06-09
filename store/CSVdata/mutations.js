@@ -13,7 +13,6 @@ export default {
   },
   updateData(state, payload) {
     _.map(state.CSVData, (stateItem) => {
-      console.log(payload.leadId === stateItem.leadId)
       if (payload.leadId === stateItem.leadId) {
         _.forEach(payload.data, (data) => {
           stateItem[data.column] = data.value;

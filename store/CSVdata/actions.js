@@ -28,13 +28,13 @@ export default {
         }
         if ((!firstName && lastName) || (firstName && !lastName)) {
           // commit error
-          // leadId column and error, type
           context.commit('error', {
             leadId: lead.leadId,
             column: firstName.trim() === '' ? names[0] : names[1],
             error: 'Incomplete Name Given',
             type: 'name'
           })
+          return;
         }
         // check if name has more than two words?
         var regexp = /[a-zA-Z]+\s+[a-zA-Z]+\s+[a-zA-Z]+/g;
@@ -56,6 +56,7 @@ export default {
             })
           }
         }
+
         firstName = firstName.toLowerCase().split(' ').map(function (word) {
           if (word[0] != word[0].toUpperCase()) {
             context.commit('log', {
@@ -67,7 +68,6 @@ export default {
           }
           return word.replace(word[0], word[0].toUpperCase());
         }).join(' ');
-
         lastName = lastName.toLowerCase().split(' ').map(function (word) {
           context.commit('log', {
             leadId: lead.leadId,

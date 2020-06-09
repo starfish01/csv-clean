@@ -21,7 +21,7 @@
       <div class="column">
         <b-button @click="processCSV">{{hasBeenProcessed ? 'Re-' : ''}}Process CSV</b-button>
       </div>
-      <div class="column" @click="exportCSV">
+      <div class="column" @click="exportCSV" v-if="this.$store.state.CSVdata.CSVData">
         <b-button>Export CSV</b-button>
       </div>
       <div class="column">
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    {{testCSV}}
+    <error-handler v-if="this.$store.state.CSVdata.errors.length"/>
 
     <div class="columns" v-if="isLoading">
       <div class="column">
@@ -49,23 +49,27 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
+import ErrorHandler from "../components/ErrorHandler";
 
 export default {
+  components: {
+    ErrorHandler
+  },
   data() {
     return {
       dropFiles: null,
       isLoading: false,
       data: null,
       hasBeenProcessed: false,
-      testCSV:''
+      testCSV: ""
     };
   },
   methods: {
     dispatchStore(data) {
       this.hasBeenProcessed = true;
       this.isLoading = true;
-      this.testCSV = data
+      this.testCSV = data;
       this.$store
         .dispatch("CSVdata/processCSV", data)
         .then(() => {
@@ -90,17 +94,13 @@ export default {
       });
     },
     exportCSV() {
-      // TODO get data from getter 
-      let test = this.$papa.unparse(this.testCSV)
-       this.$papa.download(test, 'title')
-
+      let csv = this.$papa.unparse(this.$store.state.CSVdata.CSVData);
+      this.$papa.download(csv, "processed_lead_data");
     },
     debugDataset(results) {
-      console.log(results);
       alert("debug");
     },
     renderDataset(results) {
-      console.log(results);
       alert("results");
     },
     deleteDropFile() {
