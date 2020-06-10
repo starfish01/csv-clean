@@ -1,38 +1,69 @@
 <template>
-  <form action>
-    <div class="modal-card" style="width: 90%">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Login</p>
-      </header>
-      <section class="modal-card-body">
-        <b-field label="Email">
-          <b-input type="email"  placeholder="Your email" required></b-input>
-        </b-field>
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">{{error.error}}</p>
+    </header>
 
-        <b-field label="Password">
-          <b-input
-            type="password"
-            password-reveal
-            placeholder="Your password"
-            required
-          ></b-input>
-        </b-field>
+    <div class="card-content">
+      <div class="content">
+        <div class="columns is-multiline">
+          <div class="column is-4" v-for="(data, key) in errorData" :key="key">
+            <template v-if="key !== error.column">
+              <b-field :label="key">
+                <b-input :value="data" :disabled="key !== error.column"></b-input>
+              </b-field>
+            </template>
 
-        <b-checkbox>Remember me</b-checkbox>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Close</button>
-        <button class="button is-primary">Login</button>
-      </footer>
+            <template v-if="key === error.column">
+              <b-field :label="key" :message=" 'Old Value: ' + data">
+                <b-input v-model="newValue" :disabled="key !== error.column"></b-input>
+              </b-field>
+            </template>
+          </div>
+        </div>
+      </div>
     </div>
-  </form>
+    <footer class="card-footer">
+      <a @click="saveLead(errorData)" class="card-footer-item">Save</a>
+      <a @click="deleteError(error.leadId)" class="card-footer-item">Remove from CSV</a>
+    </footer>
+  </div>
 </template>
 
 <script>
 export default {
-    props:{
-        error: Object
+  props: {
+    error: Object,
+    errorData: Object
+  },
+  data() {
+    return {
+      newValue:null
+    };
+  },
+  methods: {
+    deleteError(leadId) {
+      // fire mutation to remove item from csv data
+    },
+    saveLead(data) {
+      // leadid
+      // column
+      // value
+
+
+    //   this.$store
+    //     .dispatch("CSVdata/saveData", data)
+    //     .then(() => {
+    //       this.isLoading = false;
+    //     })
+    //     .catch(() => {
+    //       this.isLoading = false;
+    //     });
+    // },
+
+      console.log(this.newValue);
     }
+  }
 };
 </script>
 

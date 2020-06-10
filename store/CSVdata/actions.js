@@ -6,7 +6,13 @@ export default {
     context.dispatch('checkNames');
 
   },
+  saveData(context, payload) {
+    // kill error
+    
+    // save data
 
+    // 
+  },
   checkNames(context) {
     // column names are
     // child_first_name, child_last_name, guardian_1_first_name, guardian_1_last_name
